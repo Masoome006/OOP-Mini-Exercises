@@ -10,7 +10,7 @@ public class Song {
     public Song(String title , String artist , int duration , String genre){
 
         if(duration < 0){
-            throw new IllegalArgumentException("duration should be positive");
+            throw new IllegalArgumentException("duration should be positive!");
         }
 
         this.title = title;
@@ -47,7 +47,7 @@ public class Song {
     public String getFormattedDuration(){
         int min = duration / 60;
         int sec = duration % 60;
-        return String.format("%02d:%02d");
+        return String.format("%02d:%02d", min , sec);
     }
 
     public String getSongInfo(){
