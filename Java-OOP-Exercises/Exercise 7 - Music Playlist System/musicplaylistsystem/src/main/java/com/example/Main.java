@@ -1,57 +1,11 @@
-/**
- * ?? MUSIC PLAYLIST SYSTEM
- * 
- * ?? DESCRIPTION:
- * Create a music playlist management system.
- * 
- * ?? LEARNING OBJECTIVES:
- * - Work with time-based calculations
- * - Implement collection sorting
- * - Practice object composition
- * 
- * ?? REQUIREMENTS:
- * 
- * Song Class:
- * ? Private fields:
- *    - title (String): song title
- *    - artist (String): artist name
- *    - duration (int): duration in seconds
- *    - genre (String): music genre
- * 
- * ? Public Methods:
- *    - getFormattedDuration(): Return \"MM:SS\" format
- * 
- * Playlist Class:
- * ? Private fields:
- *    - name (String): playlist name
- *    - songs (ArrayList<Song>): list of songs
- * 
- * ? Public Methods:
- *    - addSong(song): Add song to playlist
- *    - getTotalDuration(): Return total duration
- *    - findSongsByArtist(artist): Return songs by artist
- *    - shuffle(): Randomize song order
- * 
- * ?? EXTRA CHALLENGE:
- * - Add song ratings
- * - Implement playlist export
- * - Add duplicate prevention
- * 
- * ?? IMPLEMENTATION TIPS:
- * 1. Create Song class first
- * 2. Build Playlist class
- * 3. Implement duration calculations
- * 4. Add search functionality
- */
- 
+package com.example;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import src.main.java.com.example.Song;
-import src.main.java.com.example.PlayList;
+import com.example.PlayList;
+import com.example.Song;
 
-
-public class HowToDo {
+public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -61,10 +15,10 @@ public class HowToDo {
         System.out.print("Enter created by: ");
         String createdBy = sc.nextLine();
 
-        PlayList playlist = new PlayList(name, new ArrayList<>(), createdBy);
+        PlayList playlist = new PlayList(name, createdBy);
 
         while(true){
-            System.out.println("\n==== PLAYLIST MENU ====");
+            System.out.println("\n**** PLAYLIST MENU ****");
             System.out.println("1. Add song");
             System.out.println("2. Remove song");
             System.out.println("3. Search song by artist");
@@ -82,32 +36,41 @@ public class HowToDo {
             switch(choice){
 
                 case 1:
-                    playlist.addSong(null);
+                    System.out.print("Title: ");
+                    String title = sc.nextLine();
+                    System.out.print("Artist: ");
+                    String artist = sc.nextLine();
+                    System.out.print("Duration (seconds): ");
+                    int duration = Integer.parseInt(sc.nextLine());
+                    System.out.print("Genre: ");
+                    String genre = sc.nextLine();
+                    Song s = new Song(title, artist, duration, genre);
+                    playlist.addSong(s);
                     break;
 
                 case 2:
                     System.out.print("Enter song title to remove: ");
-                    String title = sc.nextLine();
-                    playlist.removeSong(title);
+                    String titlle = sc.nextLine();
+                    playlist.removeSong(titlle);
                     break;
 
                 case 3:
                     System.out.print("Enter artist name: ");
-                    String artist = sc.nextLine();
-                    ArrayList<Song> result = playlist.findSongsByArtist(artist);
+                    String artistt = sc.nextLine();
+                    ArrayList<Song> result = playlist.findSongsByArtist(artistt);
 
                     if(result.isEmpty()){
                         System.out.println("No songs found.");
                     }
                     else{
-                        for (Song s : result) {
-                            System.out.println(s);
+                        for (Song so : result){
+                            System.out.println(so);
                         }
                     }
                     break;
 
                 case 4:
-                    playlist.getFormattedTotalDuration();
+                     System.out.println("Formatted Total Duration: " + playlist.getFormattedTotalDuration());
                     break;
 
                 case 5:
@@ -125,7 +88,13 @@ public class HowToDo {
                     break;
 
                 case 8:
-                    playlist.shuffle();
+                    Song randSong = playlist.shuffle();
+                    if(randSong != null){
+                        System.out.println("Random Song: " + randSong);
+                    }
+                    else{
+                        System.out.println("Playlist is empty.");
+                    }
                     break;
 
                 case 9:

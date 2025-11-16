@@ -2,46 +2,39 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
+
 public class PlayList {
     
     private String name;
     private ArrayList<Song> songs;
     private String createdby;
 
-    public PlayList(String name , ArrayList<Song> songs , String createdby){
+    public PlayList(String name, String createdby){
         this.name = name;
-        this.songs =new ArrayList<>();
+        this.songs = new ArrayList<>();
         this.createdby = createdby;
+        
     }
 
     public void addSong(Song song){
-
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter playlist name: ");
-        String name = sc.nextLine();
-        System.out.print("Enter your name: ");
-        String createdby = sc.nextLine();
-        System.out.print("Enter song title: ");
-        String title = sc.nextLine();
-        System.out.print("Enter artist: ");
-        String artist = sc.nextLine();
-        System.out.print("Enter duration in seconds: ");
-        int duration = sc.nextInt();
-        sc.nextLine(); 
-        System.out.print("Enter genre: ");
-        String genre = sc.nextLine();
-
-        Song s = new Song(title, artist, duration, genre);
-        songs.add(s);
-
-        System.out.println("✔ Song added to playlist '" + this.name + "' by " + this.createdby);
+        songs.add(song);
+        System.out.println("✔ Song added: " + song.getTitle());
     }
 
-    public void removeSong( String title){}
 
+    public boolean removeSong(String title){
+        for(Song s : songs){
+            if (s.getTitle().equalsIgnoreCase(title)){
+                songs.remove(s);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
     public int getTotalDuration(){
+
         int total = 0;
         for(Song s : songs){
             total += s.getDuration();
@@ -49,46 +42,46 @@ public class PlayList {
         return total;
     }
 
-    public void getFormattedTotalDuration(){
+    public String getFormattedTotalDuration(){
+
         int total = getTotalDuration();
         int hours = total / 3600;
         int minutes = (total % 3600) / 60;
         int seconds = total % 60;
 
-        System.out.printf("Formatted Total Duration : %02d:%02d:%02d" , hours , minutes , seconds );
-
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
-    public void findSongsByArtist( String artist){
+    public ArrayList<Song> findSongsByArtist(String artist){
         ArrayList<Song> result = new ArrayList<>();
 
         for(Song s : songs){
-            if(s.getArtist().equalsIgnoreCase(artist))
-            result.add(s);
-
+            if(s.getArtist().equalsIgnoreCase(artist)){
+                result.add(s);
+            }
         }
-        System.out.printf("result:" , result);
-
+        return result;
     }
 
-    public void shuffle(){
-        if (songs.isEmpty()){
-        System.out.println("there is no song!");
-        return;
-    }
+   
+    public Song shuffle(){
+        if(songs.isEmpty())
+        return null;
 
         Random rand = new Random();
-        int temp = rand.nextInt(songs.size());
-        System.out.printf("" ,songs.get(temp) ); 
+        int index = rand.nextInt(songs.size());
+        return songs.get(index);
     }
 
     public double getAverageSongDuration(){
-        if(songs.isEmpty())
+
+        if (songs.isEmpty())
         return 0;
 
         return (double)getTotalDuration()/songs.size();
     }
 
+   
     public Song getLongestSong(){
         if(songs.isEmpty())
         return null;
@@ -102,7 +95,7 @@ public class PlayList {
     }
 
     public Song getShortestSong(){
-        if(songs.isEmpty())
+        if(songs.isEmpty()) 
         return null;
 
         Song shortest = songs.get(0);
@@ -112,13 +105,5 @@ public class PlayList {
         }
         return shortest;
     }
-   
 
-
-   
-
-
-
-
-    
 }
