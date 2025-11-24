@@ -24,7 +24,7 @@ public class Student {
             return;
         }
         grades.add(grade);
-        System.out.println("Grade Added Succussfully.");
+        
     }
 
     public void removeGrade(int index){
@@ -36,23 +36,22 @@ public class Student {
         System.out.println("Grade '" + removed + "' Removed.");
     }
 
-    public void calculateAvrg(){
+    public double calculateAvrg(){
         if(grades.isEmpty()){
             System.out.println("There Is No Grades!");
-            return;
+            return 0.0;
         }
         double sum = 0.0;
         for(double g : grades){
             sum += g;
         }
-        double avarage = sum/grades.size();
-        System.out.println("Avarage Grade Is : " + avarage);
+        return sum/grades.size();
     }
 
-    public void getHighestgrade(){
+    public double getHighestgrade(){
         if(grades.isEmpty()){
             System.out.println("There Is No Grades!");
-            return;
+            return 0.0 ;
         }
         double highest = grades.get(0);
         for(double g : grades){
@@ -60,13 +59,13 @@ public class Student {
                 highest = g;
             }
         }
-        System.out.println("Highest Grade Is: " + highest);
+        return highest;
     }
 
-    public void getLoestGrade(){
+    public double getLowestGrade(){
         if(grades.isEmpty()){
             System.out.println("There Is No Grades!");
-            return;
+            return 0.0;
         }
         double lowest = grades.get(0);
         for(double g : grades){
@@ -74,12 +73,46 @@ public class Student {
                 lowest = g;
             }
         }
-        System.out.println("Highest Grade Is: " + lowest);
+        return lowest;
     }
 
-    public void getLettergrade(){}
+    public String getLettergrade(){
+        if(grades.isEmpty()){
+            System.out.println("There Is No Grades!");
+            return null;
+        }
+        double avrg = calculateAvrg();
+        if(avrg >= 90){
+           return "A" ;
+        }
+        else if(avrg >= 80){
+            return "B";
+        }
+        else if(avrg >= 70){
+            return "C";
+        }
+        else if(avrg >= 60){
+            return "D";
+        }
+        else{
+            return "F";
+        }
+    }
 
-    public void getStudentInfo(){}
+    public void getStudentInfo(){
+        System.out.println("   #####################################");
+        System.out.println("   #        STUDENT INFORMATION        #");
+        System.out.println("   #####################################");
+        System.out.println("");
+        System.out.println("   Student ID : " + id);
+        System.out.println("   Student Name : " + name);
+        System.out.println("   Student Department : " + department);
+        System.out.println("   Avarage Grade : " + calculateAvrg());
+        System.out.println("   Highest Grade : " + getHighestgrade());
+        System.out.println("   Lowest Grade : " + getLowestGrade());
+        System.out.println("   Letter Grade : " + getLettergrade());
+    
+    }
 
 
 
